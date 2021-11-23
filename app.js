@@ -12,8 +12,10 @@ app.set("views","views")
 app.use(express.static(path.join(__dirname, "public")))
 //Routes
 const loginRouter = require('./routes/loginRoutes');
+const register = require('./routes/registerRoutes');
 
 app.use("/login",loginRouter)
+app.use("/register",register)
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
     
