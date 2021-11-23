@@ -5,7 +5,7 @@ const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require("body-parser")
 const server = app.listen(port, () => console.log("Server Listening on port " + port));
-
+const mongoose = require("./database");
 app.set("view engine", "pug");
 app.set("views","views")
 //Any file stored inside the public folder is served as a public file
