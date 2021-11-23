@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/ojayyike/twitterClone#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pug": "^3.0.2",
+    "puh": "^1.0.0"
   }
 }
