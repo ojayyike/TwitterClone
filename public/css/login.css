@@ -1,0 +1,21 @@
+html, body {
+    background-color: #0099ff;
+}
+.wrapper {
+    
+    display: flex;
+    
+    justify-content: center;
+    
+    margin-top: 20px;
+}
+
+.loginContainer {
+    padding: 20px;
+    width:  80%;
+    max-width: 500px;
+    border: 1px solid #dedede;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0,0.3);
+}
