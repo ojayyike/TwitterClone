@@ -2,7 +2,8 @@ const express = require('express')
 const app = express();
 const port = 3008;
 const bodyParser = require("body-parser");
-const { render } = require('pug');
+const  render  = require('pug');
+const User = require("../schemas/UserSchema")
 //Create a router using the express plugin to handle the register request
 const router = express.Router();
 
@@ -21,7 +22,15 @@ router.post("/",(req, res, next) => {
     var password = req.body.password;
     var payload = req.body; 
     if (firstName && lastName && username && email && password) {
-        
+        User.findOne({
+            $or: [
+                {userName: username },
+                {email: email}
+            ]
+        })
+        .then((user) => {
+            console.log(user);
+        })
     } else {
         payload.errorMessage = "Make sure each field has a valid value";
         res.status(200).render("register",payload);
