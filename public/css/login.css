@@ -1,12 +1,11 @@
-html, body {
+body {
     background-color: #0099ff;
 }
-.wrapper {
-    
+
+.wrapper {    
     display: flex;
     justify-content: center;    
     margin-top: 20px;
-    background-color: #0099ff;
 }
 
 .loginContainer {
@@ -20,10 +19,12 @@ html, body {
     -moz-box-shadow: 0 15px 30px rgba(0,0,0,0.8);
     -webkit-box-shadow: 0 15px 30px rgba(0,0,0,0.8);
 }
+
 form {
     display:flex;
     flex-direction: column;
 }
+
 input[type="text"],
 input[type="email"],
 input[type="password"] {
