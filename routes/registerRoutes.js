@@ -6,7 +6,7 @@ const render = require('pug');
 const User = require("../schemas/UserSchema")
 //Create a router using the express plugin to handle the register request
 const router = express.Router();
-
+const bcrypt = require("bcrypt");
 app.set("view engine", "pug");
 app.set("views", "views")
 //initialize bodyParser and tell app to use 
@@ -37,6 +37,7 @@ router.post("/", async (req, res, next) => {
             });
         if (user == null) {
             //Create user and pass data into mongoDB
+            payload.password = await bcrypt.hash(password,10);
             User.create(payload).then((user) => {
                 console.log(user);
             })
