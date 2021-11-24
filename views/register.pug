@@ -7,10 +7,10 @@ block content
 
             p.errorMessage #{errorMessage}
 
-            input#firstName(type="text", name= "firstName", placeholder ="First Name", value=firstName, required="")
-            input#lastName(type="text", name= "lastName", placeholder ="Last Name", value = lastName, required="")
-            input#userName(type="text", name= "username", placeholder ="Username", value = username, required="")
-            input#userName(type="email", name= "email", placeholder ="Email",value = email, required="")
+            input(type="text", name= "firstName", placeholder ="First Name", value=firstName, required="")
+            input(type="text", name= "lastName", placeholder ="Last Name", value = lastName, required="")
+            input(type="text", name= "username", placeholder ="Username", value = username, required="")
+            input(type="email", name= "email", placeholder ="Email",value = email, required="")
             input#passWord(type="password", name="password", placeholder ="Password", required="")
             input#passWordConf(type="password", name="passwordConf", placeholder ="Confirm Password", required="")
             input(type="submit", value="Login")

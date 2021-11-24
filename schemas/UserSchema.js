@@ -13,7 +13,7 @@ const UserSchema = new Schema({
         required: true,
         trim: true
     },
-    userName:{
+    username:{
         type: String,
         required: true,
         trim: true,
@@ -34,7 +34,7 @@ const UserSchema = new Schema({
         required: true,
         default:"/images/profilePic.png"
     }
-});
+},{timestamps: true});
 
 var user = mongoose.model('User',UserSchema)
 module.exports = user;
