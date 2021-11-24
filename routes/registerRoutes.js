@@ -39,7 +39,9 @@ router.post("/", async (req, res, next) => {
             //Create user and pass data into mongoDB
             payload.password = await bcrypt.hash(password,10);
             User.create(payload).then((user) => {
-                console.log(user);
+            //Use session to track successful credentials and grant login
+                req.session.user = user;
+                return res.redirect("/");
             })
         } else {
             if (email == user.email) {

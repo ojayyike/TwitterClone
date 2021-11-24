@@ -6,11 +6,17 @@ const path = require('path')
 const bodyParser = require("body-parser")
 const server = app.listen(port, () => console.log("Server Listening on port " + port));
 const mongoose = require("./database");
+const session = require("express-session");
 app.set("view engine", "pug");
 app.set("views","views")
 //Any file stored inside the public folder is served as a public file
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(path.join(__dirname, "public")))
+app.use(session({
+    secret: "bbq chipsf",
+    resave: true,
+    saveUninitialized: false
+}))
 //Routes
 const loginRouter = require('./routes/loginRoutes');
 const register = require('./routes/registerRoutes');
