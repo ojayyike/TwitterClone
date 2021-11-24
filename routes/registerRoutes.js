@@ -21,7 +21,6 @@ router.post("/", async (req, res, next) => {
     var email = req.body.email.trim();
     var password = req.body.password;
     var payload = req.body;
-    console.log(payload);
     if (firstName && lastName && username && email && password) {
         console.log(payload);
         var user = await User.findOne({
