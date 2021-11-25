@@ -20,9 +20,11 @@ app.use(session({
 //Routes
 const loginRouter = require('./routes/loginRoutes');
 const register = require('./routes/registerRoutes');
+const logOut = require('./routes/logout');
 
 app.use("/login",loginRouter)
 app.use("/register",register)
+app.use("/logout",logOut)
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
     
