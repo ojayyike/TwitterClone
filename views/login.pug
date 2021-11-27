@@ -5,8 +5,10 @@ block content
         h1 Login 
         form(method="post") 
             p.errorMessage #{errorMessage} 
-            input(type="text", name="logUsername", placeholder ="Username or email", value = logUsername, required="")
-            input(type="password", name="logPassword", placeholder ="Password", required="")
+            //-input(type="text", name="logUsername", placeholder ="Username or email", value = logUsername, required="")
+            //-input(type="password", name="logPassword", placeholder ="Password", required="")
+            input(type="text", name="logUsername", placeholder ="Username or email", value = 'ojayyike', required="")
+            input(type="password", name="logPassword", placeholder ="Password", value='pizza', required="")
             input(type="submit", value="Login")
             br
             a(href="/register") Need an Account? Register Here.
