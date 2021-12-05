@@ -31,9 +31,30 @@ $('#submitPostButton').click((event) => {
     })
 })
 
-$(document).on("click", ".likeButton", () => {
-    alert('like Button');
+$(document).on("click", ".likeButton", (event) => {
+    var button = $(event.target);
+    var postId = getPostIdFromElement(button);
+    if (postId === undefined) {
+        return;
+    }
+
+    $.ajax({
+        url: `/api/posts/${postId}/like`,
+        type: "PUT",
+        success: (postData) => {
+            console.log(postData);
+        } 
+    })
 })
+
+function getPostIdFromElement(element) {
+    var isRoot = element.hasClass("post"); 
+    var rootElement = isRoot ? element : element.closest(".post");
+    var postId = rootElement.data().id;
+    
+    if (postId === undefined) return alert("Post id undefined");
+    return postId;
+}
  
 function createPostHtml(postData) {
     
@@ -42,7 +63,7 @@ function createPostHtml(postData) {
         return console.log("User object not populated");}  
     var displayName = postedBy.firstName + " " + postedBy.lastName;
     var timestamp = timeDifference(new Date(), new Date(postData.createdAt)); 
-    return `<div class='post'>
+    return `<div class='post' data-id='${postData._id}'>
                 
                 <div class='mainContentContainer'>
                     <div class='userImageContainer'>
