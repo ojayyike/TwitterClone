@@ -48,8 +48,13 @@ router.put("/:id/like", async (req, res, next) => {
     var isLiked = req.session.user.likes && req.session.user.likes.includes(postId);
     var option = isLiked ? "$pull" : "$addToSet";
     //insert user like into the likes array with te addtoSet variable 
-    //Use an await keywords because this is an async functions 
-    await User.findByIdAndUpdate(userId, {[option]: {likes: postId}})
+    //Use an await keywords because this is an async functions
+    //Return the newly updated user and store it into a session 
+    req.session.user = await User.findByIdAndUpdate(userId, {[option]: {likes: postId}}, {new: true}).catch(error => {
+        console.log(error);
+        res.sendStatus(400);
+    })
+
     //insert post like 
     //res.status(200).send("Yahoo!!")
 
