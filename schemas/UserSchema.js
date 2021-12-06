@@ -33,7 +33,8 @@ const UserSchema = new Schema({
         required: true,
         default:"/images/profilePic.png"
     },
-    likes: [{type: Schema.Types.ObjectId, ref: 'Post'}]
+    likes: [{type: Schema.Types.ObjectId, ref: 'Post'}],
+    retweets: [{type: Schema.Types.ObjectId, ref: 'Post'}]
 },{timestamps: true});
 
 var user = mongoose.model('User',UserSchema)
