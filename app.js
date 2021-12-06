@@ -24,6 +24,7 @@ const logOut = require('./routes/logout');
 
 //API Routs
 const postsApiRouts = require("./routes/api/posts");
+const { json } = require('body-parser');
 
 app.use("/login",loginRouter);
 app.use("/register",register);
@@ -35,7 +36,8 @@ app.get("/", middleware.requireLogin, (req, res, next) => {
     
     var payload  = {
         pageTitle: "Home",
-        userLoggedIn: req.session.user
+        userLoggedIn: req.session.user,
+        userLoggedInJS: JSON.stringify(req.session.user)
     }
     res.status(200).render("home",payload)
 })
