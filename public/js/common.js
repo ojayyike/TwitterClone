@@ -62,13 +62,12 @@ $(document).on("click", ".retweetButton", (event) => {
         url: `/api/posts/${postId}/retweet`,
         type: "POST",
         success: (postData) => {
-            console.log(postData); 
-            //button.find("span").text(postData.likes.length || "");
-            //if(postData.likes.includes(userLoggedIn._id)){
-            //    button.addClass("active")
-            //}else {
-            //    button.removeClass("active")
-            //}
+           button.find("span").text(postData.retweetUsers.length || "");
+           if(postData.retweetUsers.includes(userLoggedIn._id)){
+               button.addClass("active")
+           }else {
+               button.removeClass("active")
+           }
         } 
     })
 })
@@ -115,6 +114,7 @@ function createPostHtml(postData) {
                             <div class='postButtonContainer green'>
                                 <button class='retweetButton'>
                                     <i class='fas fa-retweet'></i>
+                                    <span>${postData.retweetUsers.length || ""}</span>
                                 </button>
                             </div>
                             <div class='postButtonContainer red'>
