@@ -207,3 +207,10 @@ buttton_span {
     color: var(--green);
     background-color: var(--greenBackground);
 }
+
+.postActionContainer {
+    padding-left: 65px;
+    font-size: 13px;
+    color: var(--greyText);
+    margin-bottom: 3px;
+}
