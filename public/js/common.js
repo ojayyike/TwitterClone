@@ -32,6 +32,14 @@ $('#submitPostButton').click((event) => {
     })
 })
 
+$("#replyModal").on("show.bs.modal", (event) => {
+    var button = $(event.relatedTarget);
+    var postId = getPostIdFromElement(button);
+     $.get("/api/posts/" + postId, (results ) => {
+        outputPosts(results, $("#originalPostContainer"))
+    })
+})
+
 $(document).on("click", ".likeButton", (event) => {
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
@@ -87,7 +95,6 @@ function createPostHtml(postData) {
     if (postData == null) return alert("post object is null")
 
     var isRetweet = postData.retweetData !== undefined;
-    console.log(isRetweet)
     var retweetedBy = isRetweet ? postData.postedBy.username : null;
     postData = isRetweet ? postData.retweetData : postData;
     
@@ -183,5 +190,18 @@ function timeDifference(current, previous) {
 
     else {
         return Math.round(elapsed/msPerYear ) + ' years ago';   
+    }
+}function outputPosts(results,container) {
+    container.html("");
+    if (!Array.isArray(results)) {
+        results = [results]
+    }
+    results.forEach(result => {
+        var html = createPostHtml(result)
+        container.append(html);
+    })
+
+    if (results.length == 0) {
+        container.append("<span class='noResults'>No Tweets to show</span>")
     }
 }
