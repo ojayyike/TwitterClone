@@ -1,7 +1,10 @@
 extends layouts/main-layout.pug
 block content
-    span #{profileUser.firstName}
-    .postsContainer
-    +createPostModals(userLoggedIn)
+    if !profileUser
+        span.errorMessage USER PROFILE IS NOT FOUND IN THE DATABASE 
+    else
+        span #{profileUser.firstName}
+        .postsContainer
+        +createPostModals(userLoggedIn)
 block scripts
     script(src="/js/profile.js") 

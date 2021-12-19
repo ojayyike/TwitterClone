@@ -247,3 +247,8 @@ buttton_span {
 .postContentContainer .header .timestamp {
     flex: 1;
 }
+
+.errorMessage {
+    font-size: 25px;
+    padding: var(--spacing);
+}
