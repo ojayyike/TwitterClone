@@ -16,28 +16,45 @@ $("#posttextarea, #replytextarea").keyup((event) => {
     submitButton.prop("disabled",false);
 })
 
-$('#submitPostButton').click((event) => {
+$('#submitPostButton, #submitReplyButton').click((event) => {
     
     var button = $(event.target);
-    var textbox = $("#posttextarea");
+    var isModal = button.parents(".modal").length==1;
+    var textbox = isModal ? $("#replytextarea") : $("#posttextarea");
+
     var data = {
         content: textbox.val()
     }
-
+    if (isModal) {
+        var id = button.data().id;
+        if (id == null) return alert("Button id is null");
+        data.replyTo = id;
+    }
     $.post("/api/posts", data, (postData ) => {
+
+        if (postData.replyTo) {
+            location.reload();
+        } else {
+
+
         var html = createPostHtml(postData);
         $(".postsContainer").prepend(html);
         textbox.val("");
-        button.prop("disabled", true);
+        button.prop("disabled", true); 
+     }
     })
 })
 
 $("#replyModal").on("show.bs.modal", (event) => {
     var button = $(event.relatedTarget);
     var postId = getPostIdFromElement(button);
+    $("#submitReplyButton").data("id",postId)
      $.get("/api/posts/" + postId, (results ) => {
         outputPosts(results, $("#originalPostContainer"))
     })
+})
+$("#replyModal").on("hidden.bs.modal", () => {
+   $("#originalPostContainer").html("")
 })
 
 $(document).on("click", ".likeButton", (event) => {
