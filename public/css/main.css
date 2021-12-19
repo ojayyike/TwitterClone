@@ -239,3 +239,11 @@ buttton_span {
 .post.largeFont .postFooter{
     font-size: 20px;
 }
+
+.postContentContainer .header {
+    display: flex;
+}
+
+.postContentContainer .header .timestamp {
+    flex: 1;
+}
