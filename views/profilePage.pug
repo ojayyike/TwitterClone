@@ -3,7 +3,11 @@ block content
     if !profileUser
         span.errorMessage USER PROFILE IS NOT FOUND IN THE DATABASE 
     else
-        span #{profileUser.firstName}
+        .profileHeaderContainer 
+            .coverPhotoContainer 
+
+                .userImageContainer 
+                    img(src=profileUser.profilePic, alt="User profile image") 
         .postsContainer
         +createPostModals(userLoggedIn)
 block scripts
