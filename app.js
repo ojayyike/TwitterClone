@@ -26,12 +26,14 @@ const profileRoute= require('./routes/profileRoutes');
 
 //API Routs
 const postsApiRouts = require("./routes/api/posts");
+const userApiRoutes= require("./routes/api/users");
 const { json } = require('body-parser');
 
 app.use("/login",loginRouter);
 app.use("/register",register);
 app.use("/logout",logOut);
 app.use("/api/posts", postsApiRouts);
+app.use("/api/users",userApiRoutes)
 app.use("/posts",middleware.requireLogin, postRoute);
 app.use("/profile",middleware.requireLogin, profileRoute);
 

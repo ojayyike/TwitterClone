@@ -15,7 +15,6 @@ router.get("/", async (req, res, next) => {
         var isReply = searchObj.isReply == "true";
         searchObj.replyTo = {$exists: isReply}; //Filter based on the replyTo field inside MongoDb database
         delete searchObj.isReply; //Delete the property fron the JS object 
-        console.log(searchObj)
     }
     
     var results = await getPosts(searchObj);
