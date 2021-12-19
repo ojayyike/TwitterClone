@@ -278,7 +278,8 @@ buttton_span {
     min-height: 66px;
 }
 
-.profileButton{
+.profileButton,
+.followButton{
     border: 1px solid var(--blue);
     color: var(--blue);
     font-weight: bold;
@@ -288,6 +289,37 @@ buttton_span {
     margin-left: var(--spacing);
 }
 
-.profileButton:hover {
+.profileButton:hover,
+.followButton:hover {
     background-color: var(--blueBackground)
+}
+
+.followButton.following {
+    background-color: var(--blue);
+    color: #fff;
+}
+
+.profileHeaderContainer .userDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10 var(--spacing);
+}
+
+.profileHeaderContainer .userDetailsContainer .followersContainer .value {
+    font-weight: bold;
+    margin-right: 5px;
+}
+.profileHeaderContainer .userDetailsContainer .followersContainer span:not(.value) {
+    color: var(--greyText)
+
+}
+
+
+.profileHeaderContainer .userDetailsContainer .followersContainer a {
+    margin-right: 15px;
+}
+
+
+.profileHeaderContainer .userDetailsContainer .followersContainer a:hover {
+    border-bottom: 1px solid #000;
 }
