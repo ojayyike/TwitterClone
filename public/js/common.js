@@ -50,7 +50,7 @@ $("#replyModal").on("show.bs.modal", (event) => {
     var postId = getPostIdFromElement(button);
     $("#submitReplyButton").data("id",postId)
      $.get("/api/posts/" + postId, (results ) => {
-        outputPosts(results, $("#originalPostContainer"))
+        outputPosts(results.postData, $("#originalPostContainer"))
     })
 })
 $("#replyModal").on("hidden.bs.modal", () => {
@@ -245,4 +245,20 @@ function timeDifference(current, previous) {
     if (results.length == 0) {
         container.append("<span class='noResults'>No Tweets to show</span>")
     }
+}
+function outputPostsWtihReplies(results,container) {
+
+    container.html("");
+   
+    if(results.replyTo !== undefined && results.replyTo._id !== undefined) {
+        var html = createPostHtml(results.replyTo)
+        container.append(html);
+    }
+    var mainPostHtml = createPostHtml(results.postData)
+        container.append(mainPostHtml);
+    results.replies.forEach(result => {
+        var html = createPostHtml(result)
+        container.append(html);
+    })
+
 }

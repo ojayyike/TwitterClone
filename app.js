@@ -31,7 +31,7 @@ app.use("/login",loginRouter);
 app.use("/register",register);
 app.use("/logout",logOut);
 app.use("/api/posts", postsApiRouts);
-app.use("/posts", postRoute);
+app.use("/posts",middleware.requireLogin, postRoute);
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
     
