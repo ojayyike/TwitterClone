@@ -115,7 +115,7 @@ function getPostIdFromElement(element) {
     return postId;
 }
  
-function createPostHtml(postData) {
+function createPostHtml(postData, largeFont = false) {
 
     if (postData == null) return alert("post object is null")
 
@@ -132,7 +132,7 @@ function createPostHtml(postData) {
 
     var likeButtonActiveClass = postData.likes.includes(userLoggedIn._id) ? "active" : "";
     var retweetButtonActiveClass= postData.retweetUsers.includes(userLoggedIn._id) ? "active" : "";
-
+    var largeFontClass = largeFont ? "largeFont" : "";
     var retweetText = '';
     if (isRetweet) {
         retweetText = `<span>
@@ -142,7 +142,7 @@ function createPostHtml(postData) {
     }
 
     var replyFlag = "";
-    if (postData.replyTo) {
+    if (postData.replyTo && postData.replyTo._id) {
         if(!postData.replyTo._id) {
             return alert("Reply to is not populated");
         }
@@ -155,7 +155,7 @@ function createPostHtml(postData) {
                         Replying to <a href='/profile/${replyToUsername}'>@${replyToUsername}</a> 
                     </div>`
     }
-    return `<div class='post' data-id='${postData._id}'>
+    return `<div class='post ${largeFontClass}' data-id='${postData._id}'>
                 <div class ='postActionContainer'>
                     ${retweetText} 
                 </div>
@@ -254,7 +254,7 @@ function outputPostsWtihReplies(results,container) {
         var html = createPostHtml(results.replyTo)
         container.append(html);
     }
-    var mainPostHtml = createPostHtml(results.postData)
+    var mainPostHtml = createPostHtml(results.postData,true)
         container.append(mainPostHtml);
     results.replies.forEach(result => {
         var html = createPostHtml(result)
