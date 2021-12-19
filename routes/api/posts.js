@@ -10,7 +10,9 @@ const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 router.get("/", async (req, res, next) => {
-    var results = await getPosts({});
+    var searchObj = req.query; 
+    
+    var results = await getPosts(searchObj);
     res.status(200).send(results);
 })
 router.get("/:id", async (req, res, next) => {

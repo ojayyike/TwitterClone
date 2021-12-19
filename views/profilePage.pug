@@ -3,6 +3,8 @@ block content
     if !profileUser
         span.errorMessage USER PROFILE IS NOT FOUND IN THE DATABASE 
     else
+        script. 
+            var profileUserId= '!{profileUser._id}'; //Take user name variable passed into the payload from appjs and inject it into the page
         .profileHeaderContainer 
             .coverPhotoContainer 
 
