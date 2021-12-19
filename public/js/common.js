@@ -97,6 +97,14 @@ $(document).on("click", ".retweetButton", (event) => {
         } 
     })
 })
+$(document).on("click", ".post", (event) => {
+    var element = $(event.target);
+    var postId = getPostIdFromElement(element);
+
+    if (postId !== undefined && !element.is("button")) {
+        window.location.href = '/posts/' + postId;
+    }
+})
 
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post"); 
@@ -132,6 +140,21 @@ function createPostHtml(postData) {
                         Retweeted By <a href='/profile/${retweetedBy}'>@${retweetedBy}</a>
                         </span>`
     }
+
+    var replyFlag = "";
+    if (postData.replyTo) {
+        if(!postData.replyTo._id) {
+            return alert("Reply to is not populated");
+        }
+        else if (!postData.replyTo.postedBy._id) {
+            return alert("PostedBy to is not populated");
+        }
+
+        var replyToUsername = postData.replyTo.postedBy.username;
+        replyFlag = `<div class = 'replyFlag'>
+                        Replying to <a href='/profile/${replyToUsername}'>@${replyToUsername}</a> 
+                    </div>`
+    }
     return `<div class='post' data-id='${postData._id}'>
                 <div class ='postActionContainer'>
                     ${retweetText} 
@@ -146,6 +169,7 @@ function createPostHtml(postData) {
                             <span class ='username'>@${postedBy.username}</span> 
                             <span class = 'timestamp'>${timestamp}</span>       
                         </div>
+                        ${replyFlag}
                         <div class='postBody'>
                             <span>${postData.content}</span>                         
                         </div>
