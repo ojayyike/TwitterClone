@@ -57,6 +57,12 @@ $("#replyModal").on("hidden.bs.modal", () => {
    $("#originalPostContainer").html("")
 })
 
+$("#deletePostModal").on("show.bs.modal", (event) => {
+    var button = $(event.relatedTarget);
+    var postId = getPostIdFromElement(button);
+    $("#deletePostButton").data("id",postId)
+})
+
 $(document).on("click", ".likeButton", (event) => {
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
@@ -105,7 +111,16 @@ $(document).on("click", ".post", (event) => {
         window.location.href = '/posts/' + postId;
     }
 })
-
+$("#deletePostButton").click((event) => {
+    var postId = $(event.target).data("id")
+    $.ajax({
+        url: `/api/posts/${postId}`,
+        type: "DELETE",
+        success: () => {
+            location.reload();
+        } 
+    })
+})
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post"); 
     var rootElement = isRoot ? element : element.closest(".post");
