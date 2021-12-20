@@ -65,6 +65,12 @@ $("#deletePostModal").on("show.bs.modal", (event) => {
     $("#deletePostButton").data("id",postId)
 })
 
+$("#confirmPinModal").on("show.bs.modal", (event) => {
+    var button = $(event.relatedTarget);
+    var postId = getPostIdFromElement(button);
+    $("#confirmPinButton").data("id",postId)
+})
+
 $("#filePhoto").change((event) => {
     var input = $(event.target)[0];
     if(input.files && input.files[0]) {
@@ -252,6 +258,19 @@ $("#deletePostButton").click((event) => {
         } 
     })
 })
+
+$("#confirmPinButton").click((event) => {
+    var postId = $(event.target).data("id")
+    $.ajax({
+        url: `/api/posts/${postId}`,
+        type: "PUT",
+        data: {pinned: true},
+        success: () => {
+            location.reload();
+        } 
+    })
+})
+
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post"); 
     var rootElement = isRoot ? element : element.closest(".post");
@@ -304,8 +323,11 @@ function createPostHtml(postData, largeFont = false) {
 
     var buttons = "";
     if (postData.postedBy._id == userLoggedIn._id) {
-        buttons = `<button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class='fas fa-trash-alt'></i></button>`
+        buttons = `<button data-id="${postData._id}" data-toggle="modal" data-target="#confirmPinModal"><i class='fas fa-thumbtack'></i></button>
+                <button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class='fas fa-trash-alt'></i></button>`
     }
+
+
     return `<div class='post ${largeFontClass}' data-id='${postData._id}'>
                 <div class ='postActionContainer'>
                     ${retweetText} 

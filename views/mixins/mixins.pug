@@ -40,9 +40,24 @@ mixin createDeletePostModal()
                 .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Close
                     button#deletePostButton.btn.btn-primary(type='button') Delete 
+mixin createConfirmPinModal()
+    // Modal
+    #confirmPinModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='confirmPinModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#confirmPinLabel.modal-title Pin this post? 
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                    p This post will appear at the top of your profile. You can only pin one post. 
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#confirmPinButton.btn.btn-primary(type='button') Yes 
 mixin createPostModals(userLoggedIn) 
     +createReplyModal(userLoggedIn)
     +createDeletePostModal()
+    +createConfirmPinModal()
 
 mixin createFollowButton(user,isFollowing)
     - text = isFollowing ? "Following" : "Follow" 
@@ -64,8 +79,7 @@ mixin createImageUploadModal()
                     button.close(type='button', data-dismiss='modal', aria-label='Close')
                     span(aria-hidden='true') &times;
                 .modal-body
-                    input#filePhoto(type="file", name="filePhoto")
-                    
+                    input#filePhoto(type="file", name="filePhoto")                    
                     .imagePreviewContainer 
                         img#imagePreview
                 .modal-footer
