@@ -85,6 +85,26 @@ $("#filePhoto").change((event) => {
         reader.readAsDataURL(input.files[0])
     }
 })
+$("#coverPhoto").change((event) => {
+    var input = $(event.target)[0];
+    if(input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            var image = document.getElementById("CoverPreview");
+            image.src=e.target.result; 
+            
+            //Check for instance of the cropper object
+            if (cropper !== undefined) {
+                cropper.destroy();
+            }
+            cropper = new Cropper(image, {
+                aspectRatio: 16 / 9,
+                background: false
+            });
+        }
+        reader.readAsDataURL(input.files[0])
+    }
+})
 
 $("#ImageUploadButton").click((event) => {
     var canvas = cropper.getCroppedCanvas();
@@ -111,6 +131,34 @@ $("#ImageUploadButton").click((event) => {
     
     })
 })
+
+
+$("#coverPhotoButton").click((event) => {
+    var canvas = cropper.getCroppedCanvas();
+    if (canvas == null) {
+        alert("Could not upload image. Make sure it was an image file");
+        return
+    }
+    //Convert the canvas to a binary large object
+    canvas.toBlob((blob) => {
+        var formData = new FormData();
+        formData.append("croppedImage",blob);
+
+        //ajax call to store image into the database
+        $.ajax({
+            url:"/api/users/coverPhoto",
+            type: "POST",
+            data: formData,
+            processData: false, //Force Jquery not to convert form data into a String
+            contentType: false, //Force Jquery not to add a acontent type header to the file itself. 
+            success: () => {
+                location.reload()
+            }
+        })
+    
+    })
+})
+
 
 $(document).on("click", ".likeButton", (event) => {
     var button = $(event.target);

@@ -82,4 +82,25 @@ router.post("/profilePicture", upload.single("croppedImage"), async (req, res, n
     req.session.user = await  User.findByIdAndUpdate(req.session.user._id, {profilePic: filePath}, {new: true});
     res.sendStatus(204);
 });
+
+router.post("/coverPhoto", upload.single("croppedImage"), async (req, res, next) => { //upload.single processes the croppedimage passed in as formdata in common.js
+    //use multer to add uploaded image 
+    if (!req.file) {
+        console.log("No file uploaded with ajax request")
+        return res.sendStatus(400);
+    }
+
+    var filePath = `/uploads/images/${req.file.filename}.png`
+    var tempPath = req.file.path;
+    var targetPath = path.join(__dirname, `../../${filePath}`);
+    fs.rename(tempPath,targetPath,error => {
+        if(error != null) {
+            console.log(error)
+            return res.sendStatus(400);
+        }
+    })
+
+    req.session.user = await  User.findByIdAndUpdate(req.session.user._id, {coverPhoto: filePath}, {new: true});
+    res.sendStatus(204);
+});
 module.exports = router;

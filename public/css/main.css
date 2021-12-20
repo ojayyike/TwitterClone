@@ -257,7 +257,7 @@ buttton_span {
     padding: var(--spacing);
 }
 
-.profileHeaderContainer .coverPhotoContainer {
+.profileHeaderContainer .coverPhotoSection {
     height: 180px;
     background-color: var(--blue);
     position: relative;
@@ -382,18 +382,32 @@ buttton_span {
     padding: 0 var(--spacing);
 }
 
-.profilePictureButton {
+.profilePictureButton,.coverPhotoButton{
     position: absolute;
     font-size: 50px;
     color: rgba(0,0,0,0.6);
     display: none;
 }
 
-.userImageContainer:hover .profilePictureButton {
+.coverPhotoContainer {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.coverPhotoContainer img {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.userImageContainer:hover .profilePictureButton, .coverPhotoSection:hover .coverPhotoButton {
     display: block;
 }
 
-#imagePreview {
+#imagePreview, #CoverPreview {
     width:100%;
     display:block;
     max-width: 100%;
