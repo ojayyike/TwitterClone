@@ -16,6 +16,16 @@ router.get("/", async (req, res, next) => {
         searchObj.replyTo = {$exists: isReply}; //Filter based on the replyTo field inside MongoDb database
         delete searchObj.isReply; //Delete the property fron the JS object 
     }
+
+    if (searchObj.followingOnly !== undefined) {
+        var followingOnly = searchObj.followingOnly == "true";
+
+        var objectIds = req.session.user.following;
+
+        objectIds.push(req.session.user._id);
+        searchObj.postedBy= {$in: objectIds}; //Find all posts postedby users inside the objectsids array
+        delete searchObj.isReply; //Delete the property fron the JS object 
+    }
     
     var results = await getPosts(searchObj);
     res.status(200).send(results);
