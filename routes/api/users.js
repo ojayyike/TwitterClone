@@ -4,6 +4,8 @@ const port = 3008;
 const bodyParser = require("body-parser");
 const User = require("../../schemas/UserSchema");
 const Post = require("../../schemas/PostSchema");
+const multer = require('multer');
+const upload = multer({dest: "uploads/"});
 
 //Create a router using the express plugin to handle the login
 const router = express.Router();
@@ -57,5 +59,13 @@ router.get("/:userId/followers", async (req, res, next) => {
         console.log(error)
         res.sendStatus(400);
     })
+});
+router.post("/profilePicture", upload.single("croppedImage"), async (req, res, next) => { //upload.single processes the croppedimage passed in as formdata in common.js
+    //use multer to add uploaded image 
+    if (!req.file) {
+        console.log("No file uploaded with ajax request")
+        return res.sendStatus(400);
+    }
+    res.sendStatus(200);
 });
 module.exports = router;

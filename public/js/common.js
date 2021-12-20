@@ -86,6 +86,32 @@ $("#filePhoto").change((event) => {
     }
 })
 
+$("#ImageUploadButton").click((event) => {
+    var canvas = cropper.getCroppedCanvas();
+    if (canvas == null) {
+        alert("Could not upload image. Make sure it was an image file");
+        return
+    }
+    //Convert the canvas to a binary large object
+    canvas.toBlob((blob) => {
+        var formData = new FormData();
+        formData.append("croppedImage",blob);
+
+        //ajax call to store image into the database
+        $.ajax({
+            url:"/api/users/profilePicture",
+            type: "POST",
+            data: formData,
+            processData: false, //Force Jquery not to convert form data into a String
+            contentType: false, //Force Jquery not to add a acontent type header to the file itself. 
+            success: () => {
+                location.reload()
+            }
+        })
+    
+    })
+})
+
 $(document).on("click", ".likeButton", (event) => {
     var button = $(event.target);
     var postId = getPostIdFromElement(button);
