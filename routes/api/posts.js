@@ -19,11 +19,20 @@ router.get("/", async (req, res, next) => {
 
     if (searchObj.followingOnly !== undefined) {
         var followingOnly = searchObj.followingOnly == "true";
+        if (followingOnly) {
+            var objectIds = [];
 
-        var objectIds = req.session.user.following;
+            if(!req.session.user.following) {
 
-        objectIds.push(req.session.user._id);
-        searchObj.postedBy= {$in: objectIds}; //Find all posts postedby users inside the objectsids array
+                req.session.user.following = []
+            }
+
+            req.session.user.following.forEach(user => {
+                objectIds.push(user);
+            })
+            objectIds.push(req.session.user._id);
+            searchObj.postedBy= {$in: objectIds}; //Find all posts postedby users inside the objectsids array
+        }
         delete searchObj.isReply; //Delete the property fron the JS object 
     }
     
