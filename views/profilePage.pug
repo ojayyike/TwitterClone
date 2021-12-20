@@ -15,7 +15,7 @@ block content
                     img(src=profileUser.profilePic, alt="User profile image") 
 
                     if profileUserId == userLoggedIn._id 
-                    button.profilePictureButton(data-toggle="modal", data-target="")
+                    button.profilePictureButton(data-toggle="modal", data-target="#ImageUploadModal")
                         i.fas.fa-camera
             .profileButtonsContainer 
                 if profileUser._id != userLoggedIn._id
@@ -44,5 +44,6 @@ block content
             +createTab("Replies", `/profile/${profileUser.username}/replies`, selectedTab == "replies")
         .postsContainer
         +createPostModals(userLoggedIn)
+        +createImageUploadModal()
 block scripts
     script(src="/js/profile.js") 

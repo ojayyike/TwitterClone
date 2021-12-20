@@ -1,3 +1,5 @@
+var cropper;
+
 $("#posttextarea, #replytextarea").keyup((event) => {
     var textbox = $(event.target);
     var value = textbox.val().trim();
@@ -61,6 +63,27 @@ $("#deletePostModal").on("show.bs.modal", (event) => {
     var button = $(event.relatedTarget);
     var postId = getPostIdFromElement(button);
     $("#deletePostButton").data("id",postId)
+})
+
+$("#filePhoto").change((event) => {
+    var input = $(event.target)[0];
+    if(input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = (e) => {
+            var image = document.getElementById("imagePreview");
+            image.src=e.target.result; 
+            
+            //Check for instance of the cropper object
+            if (cropper !== undefined) {
+                cropper.destroy();
+            }
+            cropper = new Cropper(image, {
+                aspectRatio: 1 / 1,
+                background: false
+            });
+        }
+        reader.readAsDataURL(input.files[0])
+    }
 })
 
 $(document).on("click", ".likeButton", (event) => {
