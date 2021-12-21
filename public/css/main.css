@@ -412,3 +412,7 @@ buttton_span {
     display:block;
     max-width: 100%;
 }
+
+.pinButton.active{
+    color: var(--blue);
+}
