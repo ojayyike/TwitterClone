@@ -288,8 +288,6 @@ $("#unpinButton").click((event) => {
     })
 })
 
-
-
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post"); 
     var rootElement = isRoot ? element : element.closest(".post");
