@@ -54,10 +54,25 @@ mixin createConfirmPinModal()
                 .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Close
                     button#confirmPinButton.btn.btn-primary(type='button') Yes 
+mixin createUnPinModal()
+    // Modal
+    #unpinModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='unpinModalLabel', aria-hidden='true')
+        .modal-dialog(role='document')
+            .modal-content
+                .modal-header
+                    h5#unpinLabel.modal-title Unpin this post? 
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                    span(aria-hidden='true') &times;
+                .modal-body
+                    p This post will be removed from the top of your profile.
+                .modal-footer
+                    button.btn.btn-secondary(type='button', data-dismiss='modal') Close
+                    button#unpinButton.btn.btn-primary(type='button') Yes 
 mixin createPostModals(userLoggedIn) 
     +createReplyModal(userLoggedIn)
     +createDeletePostModal()
     +createConfirmPinModal()
+    +createUnPinModal()
 
 mixin createFollowButton(user,isFollowing)
     - text = isFollowing ? "Following" : "Follow" 

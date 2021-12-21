@@ -70,6 +70,11 @@ $("#confirmPinModal").on("show.bs.modal", (event) => {
     var postId = getPostIdFromElement(button);
     $("#confirmPinButton").data("id",postId)
 })
+$("#unpinModal").on("show.bs.modal", (event) => {
+    var button = $(event.relatedTarget);
+    var postId = getPostIdFromElement(button);
+    $("#unpinButton").data("id",postId)
+})
 
 $("#filePhoto").change((event) => {
     var input = $(event.target)[0];
@@ -271,6 +276,20 @@ $("#confirmPinButton").click((event) => {
     })
 })
 
+$("#unpinButton").click((event) => {
+    var postId = $(event.target).data("id")
+    $.ajax({
+        url: `/api/posts/${postId}`,
+        type: "PUT",
+        data: {pinned: false},
+        success: () => {
+            location.reload();
+        } 
+    })
+})
+
+
+
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post"); 
     var rootElement = isRoot ? element : element.closest(".post");
@@ -322,12 +341,16 @@ function createPostHtml(postData, largeFont = false) {
     }
 
     var buttons = "";
+    var pinnedPostText = "";
     if (postData.postedBy._id == userLoggedIn._id) {
         var pinnedClass = "";
+        var dataTarget = "#confirmPinModal";
         if (postData.pinned === true) {
             pinnedClass =  "active";
+            dataTarget = "#unpinModal";
+            pinnedPostText = "<i class='fas fa-thumbtack'></i> </span>Pinned Post</span>"
         }
-        buttons = `<button class='pinButton ${pinnedClass}' data-id="${postData._id}" data-toggle="modal" data-target="#confirmPinModal"><i class='fas fa-thumbtack'></i></button>
+        buttons = `<button class='pinButton ${pinnedClass}' data-id="${postData._id}" data-toggle="modal" data-target="${dataTarget}"><i class='fas fa-thumbtack'></i></button>
                 <button data-id="${postData._id}" data-toggle="modal" data-target="#deletePostModal"><i class='fas fa-trash-alt'></i></button>`
     }
 
@@ -341,6 +364,7 @@ function createPostHtml(postData, largeFont = false) {
                         <img src='${postedBy.profilePic}'>
                     </div>
                     <div class='postContentContainer'>
+                        <div class='pinnedPostText'>${pinnedPostText}</div> 
                         <div class='header'>
                             <a href='/profile/${postedBy.username}' class='displayName'>${displayName}</a> 
                             <span class ='username'>@${postedBy.username}</span> 
@@ -416,7 +440,7 @@ function timeDifference(current, previous) {
         results = [results]
     }
     results.forEach(result => {
-        var html = createPostHtml(result)
+        var html = result.pinned ? "" : createPostHtml(result);
         container.append(html);
     })
 
