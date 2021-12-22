@@ -1,4 +1,6 @@
 var cropper;
+var timer; 
+var selectedUsers = [];
 
 $("#posttextarea, #replytextarea").keyup((event) => {
     var textbox = $(event.target);
@@ -116,6 +118,26 @@ $("#coverPhoto").change((event) => {
         reader.readAsDataURL(input.files[0])
     }
 })
+
+$("#userSearchTextBox").keydown((event) => {
+    clearTimeout(timer);
+    var textbox = $(event.target);
+    var value = textbox.val();
+    if (value = "" && event.keycode == 8) {
+        //Remove user from selection 
+        return;
+    } 
+    timer = setTimeout(() => {
+        value = textbox.val().trim();
+
+        if(value == ""){
+            $(".resultsContainer").html("");
+        } else {
+           searchUsers(value) 
+        }
+    }, 1000)
+})
+
 
 $("#ImageUploadButton").click((event) => {
     var canvas = cropper.getCroppedCanvas();
@@ -461,4 +483,70 @@ function outputPostsWtihReplies(results,container) {
         container.append(html);
     })
 
+}
+function searchUsers(searchTerm) {
+    $.get("/api/users", {search: searchTerm}, (results) => {
+        outputSelectableUsers(results,$(".resultsContainer"))
+    })
+}
+
+function outputSelectableUsers(results,container) {
+    container.html("");
+    results.forEach(result => {
+        if(result._id == userLoggedIn._id || selectedUsers.some(u => u._id == result._id)) {
+            return
+        }
+        var html = createUserHTML(result,true)
+        var element = $(html);
+        element.click(() => userSelected(result))
+        container.append(element)
+    });$
+    if (results.length == 0) {
+        container.append("<span class='noResults'>No Results found</span>")
+    }
+}
+function createUserHTML(userData, showFollowButton) {
+    var name = userData.firstName + " " + userData.lastName;
+    var isFollowing = userLoggedIn.following && userLoggedIn.following.includes(userData._id);
+    var text = isFollowing ? "Following" : "Follow" 
+    var  buttonClass = isFollowing ? "followButton following" : "followButton" 
+    
+    var followButton = "";
+    if (showFollowButton && userLoggedIn._id != userData._id) {
+        followButton = `<div class='followButtonContainer'>
+                            <button class='${buttonClass}' data-user='${userData._id}'>${text}</button> 
+                        </div>`
+    }
+    return `<div class='user'>
+                <div class='userImageContainer'>
+                    <img src='${userData.profilePic}'> 
+                </div> 
+                <div class='userDetailsContainer'>
+                    <div class='header'>
+                        <a href='/profile/${userData.username}'>${name}</a>
+                        <span class='username'>@${userData.username}</span>
+                    </div>
+                </div>  
+                 ${followButton}
+            </div>`;
+}
+function userSelected(user) {
+    console.log(user.firstName)
+    selectedUsers.push(user)
+    updateSelectedUserHtml()
+    $(".userSearchTextBox").val("").focus()
+    $(".resultsContainer").html("");
+    $("#createChatButton").prop("disabled",false)
+}
+
+function updateSelectedUserHtml() {
+    var elements = []
+    selectedUsers.forEach(user => {
+        var name = user.firstName + " " + user.lastName + " "
+        var userElement = $(`<span class='selectedUser'>${name}</span>`)
+        elements.push(userElement);
+
+    })
+    $(".selectedUser").remove();
+    $("#selectedUsers").prepend(elements)
 }

@@ -1,6 +1,10 @@
 extends layouts/main-layout.pug
 block content 
-    .resultsContainer 
-block headerButton
-    a(href="/messages/new/chat")
-        i.far.fa-comment-alt
+    .chatPageContainer 
+        .chatTitleBar 
+            label(for="userSearchTextBox") To:
+            #selectedUsers
+                input#userSearchTextBox(type="text", name="searchBox",data-search=selectedTab, placeholder="Type the name of the person")
+        .resultsContainer 
+        button#createChatButton(disabled) Create Chat
+
