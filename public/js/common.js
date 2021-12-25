@@ -123,8 +123,15 @@ $("#userSearchTextBox").keydown((event) => {
     clearTimeout(timer);
     var textbox = $(event.target);
     var value = textbox.val();
-    if (value = "" && event.keycode == 8) {
+    if (value == "" && (event.which == 8 || event.keyCode == 8)) {
         //Remove user from selection 
+        selectedUsers.pop() 
+        updateSelectedUserHtml()
+        $(".resultsContainer").html("");
+
+        if(selectedUsers.length == 0 ) {
+            $("#createChatButton").prop("disabled", true)
+        }
         return;
     } 
     timer = setTimeout(() => {
@@ -496,7 +503,7 @@ function outputSelectableUsers(results,container) {
         if(result._id == userLoggedIn._id || selectedUsers.some(u => u._id == result._id)) {
             return
         }
-        var html = createUserHTML(result,true)
+        var html = createUserHTML(result,false)
         var element = $(html);
         element.click(() => userSelected(result))
         container.append(element)
@@ -532,6 +539,7 @@ function createUserHTML(userData, showFollowButton) {
 }
 function userSelected(user) {
     console.log(user.firstName)
+    updateSelectedUserHtml()
     selectedUsers.push(user)
     updateSelectedUserHtml()
     $(".userSearchTextBox").val("").focus()
@@ -549,4 +557,17 @@ function updateSelectedUserHtml() {
     })
     $(".selectedUser").remove();
     $("#selectedUsers").prepend(elements)
+}
+
+function updateSelectedUsersHtml() {
+    var elements = [];
+
+    selectedUsers.forEach(user => {
+        var name = user.firstName + " " + user.lastName;
+        var userElement = $(`<span class='selectedUser'>${name}</span>`)
+        elements.push(userElement)
+    })
+
+    $(".selectedUser").remove();
+    $("#selectedUsers").prependK(elements);
 }
