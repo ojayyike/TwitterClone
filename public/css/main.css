@@ -16,6 +16,13 @@
 
 }
 
+html,body{
+    height: 100%;
+    min-height: 100%;
+    background-color: #ffffff;
+    font-weight: 300;
+}
+
 a {
     color: inherit;
 }
@@ -47,8 +54,14 @@ nav a {
     justify-content: center;
     color: #212529;
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
 .wrapper > .row {
     margin: 0;
+    height: 100%;
 }
 nav a.blue {
     color: var(--blue);
@@ -59,6 +72,8 @@ nav a:hover {
     color: var(--blue);
     border-radius: 50%;
 }
+
+
 
 button{
     background-color: transparent;
@@ -565,4 +580,62 @@ buttton_span {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.chatTitleBarContainer {
+    border-bottom: 1px solid var(--lightGrey);
+    display:flex;
+    align-items: center;
+    padding: var(--spacing);
+
+}
+
+#chatName {
+    width: 100%;
+    border: 1px solid transparent;
+    padding: 0 5px;
+}
+
+#chatName:hover {
+    border: 1px solid var(--lightGrey);
+    cursor: text;
+}
+
+.chatContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: hidden;
+}
+
+.chatContainer .footer {
+    display: flex;
+    padding: var(--spacing);
+    flex-shrink: 0px;
+}
+
+.chatContainer .footer textarea {
+    flex: 1;
+    display: flex;
+    resize: none;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 18px;
+    border: none;
+    padding: 8px 12px;
+    height: 38px;
+    
+}
+
+.chatContainer .footer button {
+    background-color: transparent;
+    color: var(--blue);
+    font-size: 24px;
+}
+
+.chatMessages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: var(--spacing);
 }

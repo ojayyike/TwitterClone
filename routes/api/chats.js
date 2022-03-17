@@ -38,6 +38,7 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
     Chat.find({users: {$elemMatch: { $eq: req.session.user._id}}}) //Find on users property that has element match = userloggedin id
     .populate("users")
+    .sort({updatedAt: -1})
     .then(results => {
         res.status(200).send(results)
     }).catch(error => {
