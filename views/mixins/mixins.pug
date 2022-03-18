@@ -118,3 +118,23 @@ mixin createCoverPhotoUploadModal()
                 .modal-footer
                     button.btn.btn-secondary(type='button', data-dismiss='modal') Cancel
                     button#coverPhotoButton.btn.btn-primary(type='button')  Save
+mixin createChatImage(chatData, userLoggedIn)
+    if (!chatData)
+        return 
+    
+    - var i = 0
+    - var maxImagesToShow = 3
+    - var remainingUsers =  chatData.users.length - maxImagesToShow 
+    - remainingUsers-- //Remove 1 to prevent display own image 
+
+    .chatImageContainer
+        if remainingUsers > 0
+            .userCount
+                span +#{remainingUsers}
+        each user in chatData.users
+            if chatData.users.length != 1 && user == userLoggedIn 
+                - continue
+            else if i >= maxImagesToShow 
+                - break
+            img(src=user.profilePic, alt="User's profile picture", title=user.firstName)
+            - i++
