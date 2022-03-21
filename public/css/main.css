@@ -670,3 +670,7 @@ buttton_span {
 .chatImageContainer .userCount {
     margin-left: -10px;
 }
+
+#chatNameTextBox {
+    width: 100%;
+}
