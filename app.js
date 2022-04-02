@@ -31,12 +31,14 @@ const messageRoute = require('./routes/messageRoutes')
 const postsApiRouts = require("./routes/api/posts");
 const userApiRoutes= require("./routes/api/users");
 const chatsApiRoutes= require("./routes/api/chats");
+const messageApiRoutes= require("./routes/api/messages");
 
 app.use("/login",loginRouter);
 app.use("/register",register);
 app.use("/logout",logOut);
 app.use("/api/posts", postsApiRouts);
 app.use("/api/users",userApiRoutes)
+app.use("/api/messages",messageApiRoutes)
 app.use("/posts",middleware.requireLogin, postRoute);
 app.use("/profile",middleware.requireLogin, profileRoute);
 app.use("/uploads",uploadRoute)
