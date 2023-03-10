@@ -8,6 +8,15 @@ With the application, you can create your own social network that is similar to 
 
 This application uses Socket IO to enable real-time communication between users, making it easy to stay up-to-date with the latest tweets and notifications. It also uses MongoDB and Mongoose to store and retrieve data, and HTML and CSS to create a responsive and user-friendly interface.
 
+## Features
+
+1. User authentication and account creation
+2. Posting, liking, and retweeting tweets
+3. Following and unfollowing other users
+4. Real-time updates and notifications using Socket IO
+5. Responsive and user-friendly interface using HTML and CSS
+6. Data storage and retrieval using MongoDB and Mongoose
+
 ## Installation
 
 To install, follow these steps:
